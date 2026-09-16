@@ -1,16 +1,16 @@
 {
-	"version": "14.9.2",
-	"project": {
-		"defaultPort": 8000,
-		"framework": "webcomponents",
+  "version": "14.9.2",
+  "project": {
+    "defaultPort": 3003,
+    "framework": "react",
+    "projectType": "igr-ts",
     "projectTemplate": "base",
-		"projectType": "igc-ts",
-		"theme": "default",
-		"isBundle": false,
-		"components": [],
-		"sourceFiles": [],
-		"isShowcase": false,
-		"version": ""
-	},
-	"build": {}
+    "theme": "default",
+    "isBundle": false,
+    "components": [],
+    "sourceFiles": [],
+    "isShowcase": false,
+    "version": ""
+  },
+  "build": {}
 }

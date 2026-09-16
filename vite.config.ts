@@ -1,25 +1,13 @@
-import { defineConfig } from 'vitest/config';
-import { VitePWA } from 'vite-plugin-pwa';
-import { viteStaticCopy } from 'vite-plugin-static-copy';
+/// <reference types="vitest" />
+import { defineConfig } from 'vitest/config'
+import react from '@vitejs/plugin-react'
 
+// https://vitejs.dev/config/
 export default defineConfig({
   build: {
-    rollupOptions: {
-      output: {
-        entryFileNames: '[hash].js',
-        chunkFileNames: '[hash].js',
-        assetFileNames: '[hash][extname]',
-      },
-      onwarn: (warning, warn) => {
-        if (warning.code === 'THIS_IS_UNDEFINED') return;
-        warn(warning);
-      },
-    },
-    target: 'es2021',
-    minify: 'terser',
-    emptyOutDir: false,
-    chunkSizeWarningLimit: 10 * 1024 * 1024 // 10 MB
+    chunkSizeWarningLimit: 10 * 1024 * 1024, // 10 MB
   },
+  plugins: [react()],
   test: {
     browser: {
       enabled: true,
@@ -29,36 +17,13 @@ export default defineConfig({
           browser: 'chromium'
         },
       ],
-    },
+    }
   },
-  plugins: [
-    /** Copy static assets */
-    viteStaticCopy({
-      targets: [
-        { src: 'src/assets', dest: 'src' }
-      ],
-      silent: true,
-    }),
-    /** PWA Plugin for service worker generation */
-    VitePWA({
-      registerType: 'autoUpdate',
-      strategies: 'generateSW',
-      workbox: {
-        globDirectory: 'dist',
-        globPatterns: ['**/*.{html,js,css,webmanifest}'],
-        globIgnores: ['polyfills/*.js', 'nomodule-*.js'],
-        navigateFallback: '/index.html',
-        runtimeCaching: [
-          {
-            urlPattern: /^polyfills\/.*\.js$/,
-            handler: 'CacheFirst',
-          },
-        ],
-        maximumFileSizeToCacheInBytes: 10 * 1024 * 1024 // 10 MB
-      },
-      manifest: {
-        theme_color: "#ffffff"
-      }
-    }),
-  ],
-});
+  resolve: {
+    mainFields: ['module'],
+  },
+  server: {
+    open: true,
+    port: 3003
+  }
+})

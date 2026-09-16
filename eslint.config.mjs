@@ -1,6 +1,6 @@
 import js from '@eslint/js';
 import typescriptParser from '@typescript-eslint/parser';
-import tseslint from '@typescript-eslint/eslint-plugin';
+import reactRefresh from 'eslint-plugin-react-refresh';
 import { FlatCompat } from "@eslint/eslintrc";
 
 const compat = new FlatCompat({
@@ -8,30 +8,41 @@ const compat = new FlatCompat({
 });
 
 export default [
-  ...compat.extends('eslint:recommended', 'plugin:@typescript-eslint/recommended'),
+  ...compat.extends('eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:react-hooks/recommended'),
   {
     files: ['**/*.ts', '**/*.tsx'],
     languageOptions: {
       globals: {
         browser: true,
-        es2021: true,
-        jasmine: true,
+        es2020: true,
       },
       parser: typescriptParser,
       parserOptions: {
-        ecmaVersion: 12,
+        ecmaVersion: 'latest',
         sourceType: 'module',
       },
     },
     plugins: {
-      '@typescript-eslint': tseslint,
+      reactRefresh
     },
     rules: {
-      '@typescript-eslint/no-inferrable-types': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          args: 'all',
+          argsIgnorePattern: '^_',
+          caughtErrors: 'all',
+          caughtErrorsIgnorePattern: '^_',
+          destructuredArrayIgnorePattern: '^(_|set)',
+          varsIgnorePattern: '^_',
+          ignoreRestSiblings: true,
+        },
+      ],
+      'reactRefresh/only-export-components': ['warn', { allowConstantExport: true }],
       '@typescript-eslint/no-explicit-any': 'off',
     },
   },
   {
-    ignores: ['dist', 'test']
+    ignores: ['dist']
   }
 ];

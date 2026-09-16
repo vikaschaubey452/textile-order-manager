@@ -1,5 +1,12 @@
+:root {
+  --ig-font-family: 'Titillium Web', sans-serif;
+  --ig-secondary-500: #df1b74;
+  --ig-warn-500: #faa419;
+  --ig-secondary-500-contrast: white;
+}
+
 /* Charts */
-:host {
+:root {
   --charts-default-series: #9de772, #8b5bb1, #6db1ff, #9af2e4, #ee5879, #735656, #f7d262, #a8a8b7, #e051a9, #f8a15f;
 }
 
